@@ -22,6 +22,8 @@ gem 'jquery-rails'
 #Api gems
 gem 'active_model_serializers'
 
+gem 'devise'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
