@@ -11,28 +11,38 @@ class Api::V1::SessionsController < ApplicationController
     if user && user.valid_password?(user_password)
       sign_in user, store: false
 
-      user.device.create(user_id: user.id , uuid: user_uuid)
-      user.save
+      device = user.device.where(user_id:user.id ,uuid: user_uuid)
+
+      if device.nil?
+        user.device.create(user_id: user.id , uuid: user_uuid)
+        user.save
+
+      else
+        device.generate_authentication_token!
+        device.save
+      end
+
       render :json =>{
         :user => user,
-        :status => :ok,
+        :status => 200,
         :auth_token => Device.find_by(uuid: user_uuid).auth_token
-      }, status: 200
-    else
-      render json: { errors: "Invalid email or password" }, status: 422
+        }, status: 200
+      else
+        render json: { errors: "Invalid email or password" }, status: 422
+      end
     end
-  end
 
-  def destroy
+    def destroy
 
-    device = Device.find_by(auth_token: request.headers['Authorization'])
-    if device
-      device.generate_authentication_token!
-      device.save
-      head 204
+      device = Device.find_by(auth_token: request.headers['Authorization'])
+      if device
+        device.generate_authentication_token!
+        device.save
+        head 204
 
-    else
-      render json: { errors: "Invalid token" }, status: 422
+      else
+        render json: { errors: "Invalid token" }, status: 422
+      end
     end
+
   end
-end
