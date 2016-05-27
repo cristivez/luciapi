@@ -11,7 +11,7 @@ class Api::V1::SessionsController < ApplicationController
     if user && user.valid_password?(user_password)
       sign_in user, store: false
 
-      device = user.device.where(user_id:user.id ,uuid: user_uuid)
+      device = Device.where(user_id: user.id ,uuid: user_uuid).first
 
       if device.nil?
         user.device.create(user_id: user.id , uuid: user_uuid)
@@ -25,7 +25,7 @@ class Api::V1::SessionsController < ApplicationController
       render :json =>{
         :user => user,
         :status => 200,
-        :auth_token => Device.find_by(uuid: user_uuid).auth_token
+        :auth_token => Device.where(user_id:user.id ,uuid: user_uuid).first.auth_token
         }, status: 200
       else
         render json: { errors: "Invalid email or password" }, status: 422
