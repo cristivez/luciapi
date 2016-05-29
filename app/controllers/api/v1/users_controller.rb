@@ -1,11 +1,17 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_with_token!, only: [:update, :destroy]
-  before_action :current_user, only: [:update, :destroy]
+  before_action :authenticate_with_token!, only: [:show, :update, :destroy]
+  before_action :current_user, only: [:show, :update, :destroy]
 
   respond_to :json
 
   def show
-    respond_with User.find(params[:id])
+    # respond_with User.find(params[:id])
+
+    if current_user
+      render json: current_user, status: 200
+    else
+      render json: { errors: "Invalid token" }, status: 422
+    end
   end
 
   def create
@@ -34,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
-    def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
-    end
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :phoneNumber, :firstName, :lastName, :birthDate)
+  end
 end
