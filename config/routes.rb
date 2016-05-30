@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
       delete 'signout' => 'sessions#destroy'
       get 'userProfile' => 'users#show'
+      post 'autopopulate' => 'autopopulates#autopopulate'
 
       resources :sessions, :only => [:create, :destroy]
     end
