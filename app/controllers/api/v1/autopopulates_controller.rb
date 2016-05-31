@@ -1,6 +1,6 @@
 class Api::V1::AutopopulatesController < ApplicationController
 
-  before_action :authenticate_with_token!, only: [:autopopulate]
+  # before_action :authenticate_with_token!, only: [:autopopulate]
 
   respond_to :json
 
