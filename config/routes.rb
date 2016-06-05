@@ -12,7 +12,11 @@ Rails.application.routes.draw do
       delete 'signout' => 'sessions#destroy'
       get 'userProfile' => 'users#show'
       post 'autopopulate' => 'autopopulates#autopopulate'
+      get 'test' => 'testapns#test'
 
+     post 'onlineEvent'=> 'oevents#create'
+     post 'showOnlineEvents' => 'oevents#show'
+     post 'cancelEvent' => 'oevents#delete'
       resources :sessions, :only => [:create, :destroy]
     end
   end

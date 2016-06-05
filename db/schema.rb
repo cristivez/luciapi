@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529175456) do
+ActiveRecord::Schema.define(version: 20160605192731) do
 
   create_table "devices", force: :cascade do |t|
     t.string   "uuid"
@@ -22,6 +22,25 @@ ActiveRecord::Schema.define(version: 20160529175456) do
   end
 
   add_index "devices", ["uuid"], name: "index_uuid"
+
+  create_table "online_event_guests", force: :cascade do |t|
+    t.string   "phoneNumber"
+    t.integer  "oid"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "online_events", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.decimal  "latitude"
+    t.decimal  "longitude"
+    t.datetime "eventDate"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "status",      default: true
+    t.integer  "owner"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
