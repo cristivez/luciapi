@@ -33,7 +33,7 @@ class  Api::V1::OeventsController < ApplicationController
             devices = Device.where(user_id: friend.id)
             devices.each do |device|
 
-              APNS.send_notification(device.uuid, :alert => 'Ai fost invitata la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => onlineEvent.id} )
+              APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitata la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => onlineEvent.id} )
             end
           end
           results.push({:user => friend})
@@ -116,7 +116,7 @@ class  Api::V1::OeventsController < ApplicationController
       end
     end
 
-    render json:{eventAsOwner:ownerEventsResult,eventAsGuest: eventAsGuestResult}, status:201
+    render json:{eventAsOwner:ownerEventsResult,eventAsGuest: eventAsGuestResult}, status:200
 
   end
 

@@ -15,10 +15,24 @@ class Api::V1::TestapnsController < ApplicationController
 
     device_token = 'dfa25cf785af051b1a9a1af36bbb0ab25c0292b51b8cf4871cafd646f0bcd251'
 
-   APNS.send_notification(device_token, 'Hello iPhone!' )
+
+    friend =  User.find_by(phoneNumber: '0728065887')
+
+    if friend
+      devices = Device.where(user_id: friend.id)
+      devices.each do |device|
+
+        APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitata la un eveniment!', :badge => 2, :sound => 'default' )
+
+        render json:{status: :ok}
+
+      end
+    else
+      render json:{status: :wrong}
+
+    end
 
 
-    render json:{status: :ok}
   end
 
 

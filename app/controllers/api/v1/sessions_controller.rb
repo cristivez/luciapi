@@ -6,6 +6,7 @@ class Api::V1::SessionsController < ApplicationController
     user_password = params[:session][:password]
     user_email = params[:session][:email]
     user_uuid = params[:session][:uuid]
+    user_pushtoken = params[:session][:pushToken]
     user = user_email.present? && User.find_by(email: user_email)
 
     if user && user.valid_password?(user_password)
@@ -14,11 +15,12 @@ class Api::V1::SessionsController < ApplicationController
       device = Device.where(user_id: user.id ,uuid: user_uuid).first
 
       if device.nil?
-        user.device.create(user_id: user.id , uuid: user_uuid)
+        user.device.create(user_id: user.id , uuid: user_uuid, pushtoken: user_pushtoken)
         user.save
 
       else
         device.generate_authentication_token!
+        device.update(pushtoken: user_pushtoken)
         device.save
       end
 

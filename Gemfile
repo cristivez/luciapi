@@ -16,6 +16,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+gem 'json' ,'1.8.2'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
@@ -45,6 +47,11 @@ end
 group :development, :test do
   gem "factory_girl_rails"
   gem 'ffaker'
+end
+
+group :production do
+  gem 'pg',             '0.17.1'
+  gem 'rails_12factor', '0.0.2'
 end
 
 group :test do
