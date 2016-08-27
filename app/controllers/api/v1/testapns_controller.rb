@@ -22,15 +22,14 @@ class Api::V1::TestapnsController < ApplicationController
       devices = Device.where(user_id: friend.id)
       devices.each do |device|
 
-        APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitata la un eveniment!', :badge => 2, :sound => 'default' )
+          APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitata la un eveniment!', :badge => 2, :sound => 'default' )
 
-        render json:{status: :ok}
 
       end
     else
-      render json:{status: :wrong}
 
     end
+    render json:{status: :ok}
 
 
   end

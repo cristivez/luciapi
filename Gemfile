@@ -20,6 +20,7 @@ gem 'json' ,'1.8.2'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
+gem 'sqlite3'
 
 #Api gems
 gem 'active_model_serializers'
