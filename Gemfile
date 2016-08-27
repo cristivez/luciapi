@@ -20,12 +20,12 @@ gem 'json' ,'1.8.2'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
-gem 'sqlite3'
 
 #Api gems
 gem 'active_model_serializers'
 
 gem 'devise'
+gem 'pg',             '0.17.1'
 
 gem 'apns'
 group :doc do
@@ -41,9 +41,7 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :development do
-  gem 'sqlite3'
-end
+
 
 group :development, :test do
   gem "factory_girl_rails"
@@ -51,7 +49,6 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg',             '0.17.1'
   gem 'rails_12factor', '0.0.2'
 end
 
