@@ -18,6 +18,8 @@ gem 'jquery-rails'
 
 gem 'json' ,'1.8.2'
 
+gem 'turbolinks'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
