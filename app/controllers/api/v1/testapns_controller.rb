@@ -5,27 +5,24 @@ class Api::V1::TestapnsController < ApplicationController
   def test
 
     APNS.host = 'gateway.sandbox.push.apple.com'
-       # gateway.sandbox.push.apple.com is default
+    # gateway.sandbox.push.apple.com is default
 
-       APNS.pem  = "#{Rails.root}/config/apns-dev-cert.pem"
-       # this is the file you just created
+    APNS.pem  = "#{Rails.root}/config/apns-dev-cert.pem"
+    # this is the file you just created
 
-       APNS.port = 2195
-
-
-    device_token = '64fb0fd0226b4c79f3326c3d83b41433da9d79f4afb63226ac81f91954e3d48d'
+    APNS.port = 2195
 
 
+    device_token = '413b8b08a146ef0a5332b78c2f408442872d6ff4920d65a039c749b1acd5a8a3'
 
-          APNS.send_notification(device_token, :alert => 'Ai fost invitata la un eveniment!', :badge => 2, :sound => 'default' )
 
+
+    APNS.send_notification(device_token, :alert => 'Ai fost invitata la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => 1, :type => 0} )
 
 
     render json:{status: :ok}
 
 
   end
-
-
 
 end

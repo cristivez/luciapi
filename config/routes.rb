@@ -17,6 +17,8 @@ Rails.application.routes.draw do
      post 'onlineEvent'=> 'oevents#create'
      post 'showOnlineEvents' => 'oevents#show'
      post 'cancelEvent' => 'oevents#delete'
+
+     post 'showEvent' => 'oevents#showEvent'
       resources :sessions, :only => [:create, :destroy]
     end
   end

@@ -33,7 +33,7 @@ class  Api::V1::OeventsController < ApplicationController
             devices = Device.where(user_id: friend.id)
             devices.each do |device|
 
-              APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitata la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => onlineEvent.id} )
+              APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitat la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => onlineEvent.id , :type => 0} )
             end
           end
           results.push({:user => friend})
@@ -92,10 +92,9 @@ class  Api::V1::OeventsController < ApplicationController
 
       eventsAsGuest.each do |eventAsGuest|
 
-        event = OnlineEvent.find(eventAsGuest.oid)
+        event = OnlineEvent.where(eventAsGuest.oid)
         if event.status
-          owner = User.find(event.owner)
-
+          owner = User.where(id: event.owner)
 
           ownerEventHash = Hash.new();
           ownerEventHash[:owner] = owner
@@ -115,10 +114,35 @@ class  Api::V1::OeventsController < ApplicationController
         end
       end
     end
-
     render json:{eventAsOwner:ownerEventsResult,eventAsGuest: eventAsGuestResult}, status:200
+  end
+
+  def showEvent
+    event = OnlineEvent.find(params[:id]);
+
+    if event
+      ownerEventHash = Hash.new();
+      ownerEventHash[:event] = event
+      guestEventsResult = Array.new();
+
+      guests = OnlineEventGuest.where(oid: event.id)
+      if guests
+        guests.each do |guest|
+          user = User.find_by(phoneNumber: guest.phoneNumber)
+          guestEventsResult.push(:user => user)
+        end
+      end
+
+      ownerEventHash[:guests] = guestEventsResult
+      render json:{event:ownerEventHash}, status:200
+
+    else
+      render json:{status:401}, status:401
+    end
 
   end
+
+
 
   def delete
 
