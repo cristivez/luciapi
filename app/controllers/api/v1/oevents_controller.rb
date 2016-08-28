@@ -12,7 +12,7 @@ class  Api::V1::OeventsController < ApplicationController
     owner = User.find_by(email: event[:owner])
 
     APNS.host = 'gateway.sandbox.push.apple.com'
-    APNS.pem  = '#{Rails.root}/config/apns-dev-cert.pem'
+    APNS.pem  = "#{Rails.root}/config/apns-dev-cert.pem"
     APNS.port = 2195
 
     results = Array.new();
