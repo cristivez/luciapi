@@ -6,11 +6,11 @@
 #
 development:
   adapter: postgresql
-  encoding: utf8
-  database: project_development
-  pool: 5
-  username:
-  password:
+  host:  ec2-54-163-230-90.compute-1.amazonaws.com
+  username: ncuzekbdjhhnqc
+  password: h6kMifQhkAtiHCF87ZG93UQ4ib
+  port: 5432
+  database: d4kcjr5q7p0ui7
 
 test: &TEST
   adapter: postgresql
@@ -21,12 +21,12 @@ test: &TEST
   password:
 
 production:
-  adapter: postgresql
-  encoding: utf8
-  database: project_production
-  pool: 5
-  username:
-  password:
+    adapter: postgresql
+    host:  ec2-54-163-230-90.compute-1.amazonaws.com
+    username: ncuzekbdjhhnqc
+    password: h6kMifQhkAtiHCF87ZG93UQ4ib
+    port: 5432
+    database: d4kcjr5q7p0ui7
 
 cucumber:
   <<: *TEST
