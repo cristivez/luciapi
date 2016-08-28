@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160608174331) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "devices", force: :cascade do |t|
     t.string   "uuid"
     t.string   "auth_token"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160608174331) do
     t.string   "pushtoken"
   end
 
-  add_index "devices", ["uuid"], name: "index_uuid"
+  add_index "devices", ["uuid"], name: "index_uuid", using: :btree
 
   create_table "online_event_guests", force: :cascade do |t|
     t.string   "phoneNumber"
@@ -62,7 +65,7 @@ ActiveRecord::Schema.define(version: 20160608174331) do
     t.date     "birthDate"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
