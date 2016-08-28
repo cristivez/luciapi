@@ -140,7 +140,9 @@ class  Api::V1::OeventsController < ApplicationController
   end
 
   def showEvent
-    event = OnlineEvent.find(params[:id]);
+
+    # eid = params:[id]  
+    # event = OnlineEvent.find(eid);
 
     if event
       ownerEventHash = Hash.new();
@@ -165,7 +167,6 @@ class  Api::V1::OeventsController < ApplicationController
     else
       render json:{status:401}, status:401
     end
-
   end
 
 
