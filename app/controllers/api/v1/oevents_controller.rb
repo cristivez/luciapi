@@ -141,12 +141,12 @@ class  Api::V1::OeventsController < ApplicationController
 
   def showEvent
 
-    # eid = params:[id]  
-    # event = OnlineEvent.find(eid);
+    eid = params:[id]
+    event = OnlineEvent.find(eid);
 
     if event
       ownerEventHash = Hash.new();
-      ownerEventHash[:event] = event
+      # ownerEventHash[:event] = event
       guestEventsResult = Array.new();
 
       guests = OnlineEventGuest.where(oid: event.id)
@@ -161,7 +161,7 @@ class  Api::V1::OeventsController < ApplicationController
         end
       end
 
-      ownerEventHash[:guests] = guestEventsResult
+      # ownerEventHash[:guests] = guestEventsResult
       render json:{event:ownerEventHash}, status:200
 
     else
