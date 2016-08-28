@@ -145,23 +145,23 @@ class  Api::V1::OeventsController < ApplicationController
     event = OnlineEvent.find(eid);
 
     if event
-      ownerEventHash = Hash.new();
-      # ownerEventHash[:event] = event
-      guestEventsResult = Array.new();
+      ownerEventHash = Hash.new
+      ownerEventHash["event"] = event
 
       guests = OnlineEventGuest.where(oid: event.id)
       if guests
         unless guests.kind_of?(Array)
           guests.to_a
         end
+        guestEventsResult = Array.new
 
         guests.each do |guest|
           user = User.find_by(phoneNumber: guest.phoneNumber)
           guestEventsResult.push(:user => user)
         end
+        ownerEventHash["guests"] = guestEventsResult
       end
 
-      # ownerEventHash[:guests] = guestEventsResult
       render json:{event:ownerEventHash}, status:200
 
     else
