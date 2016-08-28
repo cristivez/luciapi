@@ -141,7 +141,7 @@ class  Api::V1::OeventsController < ApplicationController
 
   def showEvent
 
-    eid = params:[id]
+    eid = params[:id]
     event = OnlineEvent.find(eid);
 
     if event
