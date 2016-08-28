@@ -18,6 +18,8 @@ gem 'jquery-rails'
 
 gem 'json' ,'1.8.2'
 
+ruby '2.2.4'
+
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -30,6 +32,10 @@ gem 'devise'
 gem 'pg',             '0.17.1'
 
 gem 'apns'
+
+gem 'cowsay'
+
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -43,7 +49,7 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-
+gem 'puma'
 
 group :development, :test do
   gem "factory_girl_rails"
