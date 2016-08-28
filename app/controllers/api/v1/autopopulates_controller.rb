@@ -9,7 +9,9 @@ class Api::V1::AutopopulatesController < ApplicationController
     agenda = params[:agenda]
 
     results = Array.new();
-
+    unless agenda.kind_of?(Array)
+      agenda.to_a
+    end
     agenda.each do |number|
 
       friend =  User.find_by(phoneNumber: number[:numbers])

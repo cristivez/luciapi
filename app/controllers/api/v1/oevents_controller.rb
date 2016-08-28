@@ -22,6 +22,10 @@ class  Api::V1::OeventsController < ApplicationController
 
       guests = event[:guests]
       if guests
+        unless guests.kind_of?(Array)
+          guests.to_a
+        end
+
         guests.each do |guestNumber|
 
           guest = OnlineEventGuest.new(phoneNumber: guestNumber[:numbers], oid: onlineEvent.id)
@@ -31,6 +35,10 @@ class  Api::V1::OeventsController < ApplicationController
 
           if friend
             devices = Device.where(user_id: friend.id)
+            unless devices.kind_of?(Array)
+              devices.to_a
+            end
+
             devices.each do |device|
 
               APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitat la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => onlineEvent.id , :type => 0} )
@@ -60,9 +68,13 @@ class  Api::V1::OeventsController < ApplicationController
 
     ownerEventsResult = Array.new();
 
-    ownerEvents = OnlineEvent.where(owner: user.id).where(status: true)
+    ownerEvents = OnlineEvent.where(owner: user.id)
 
     if ownerEvents
+      unless ownerEvents.kind_of?(Array)
+        ownerEvents.to_a
+      end
+
       ownerEvents.each do |event|
 
         ownerEventHash = Hash.new();
@@ -71,13 +83,16 @@ class  Api::V1::OeventsController < ApplicationController
         guestEventsResult = Array.new();
 
         guests = OnlineEventGuest.where(oid: event.id)
+
         if guests
+          unless guests.kind_of?(Array)
+            guests.to_a
+          end
           guests.each do |guest|
             user = User.find_by(phoneNumber: guest.phoneNumber)
             guestEventsResult.push(:user => user)
           end
         end
-
         ownerEventHash[:guests] = guestEventsResult
 
         ownerEventsResult.push(:events => ownerEventHash)
@@ -89,12 +104,14 @@ class  Api::V1::OeventsController < ApplicationController
 
     eventsAsGuest = OnlineEventGuest.where(phoneNumber: user.phoneNumber)
     if eventsAsGuest
-
+      unless eventsAsGuest.kind_of?(Array)
+        eventsAsGuest.to_a
+      end
       eventsAsGuest.each do |eventAsGuest|
 
-        event = OnlineEvent.where(eventAsGuest.oid)
+        event = OnlineEvent.find(eventAsGuest.oid)
         if event.status
-          owner = User.where(id: event.owner)
+          owner = User.find(event.owner)
 
           ownerEventHash = Hash.new();
           ownerEventHash[:owner] = owner
@@ -103,10 +120,15 @@ class  Api::V1::OeventsController < ApplicationController
 
           guests = OnlineEventGuest.where(oid: event.id)
           if guests
+            unless guests.kind_of?(Array)
+              guests.to_a
+            end
+
             guests.each do |guest|
               user = User.find_by(phoneNumber: guest.phoneNumber)
               guestEventsResult.push(:user => user)
             end
+
           end
 
           ownerEventHash[:guests] = guestEventsResult
@@ -127,6 +149,10 @@ class  Api::V1::OeventsController < ApplicationController
 
       guests = OnlineEventGuest.where(oid: event.id)
       if guests
+        unless guests.kind_of?(Array)
+          guests.to_a
+        end
+
         guests.each do |guest|
           user = User.find_by(phoneNumber: guest.phoneNumber)
           guestEventsResult.push(:user => user)
