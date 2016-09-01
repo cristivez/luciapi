@@ -16,8 +16,12 @@ class Api::V1::TestapnsController < ApplicationController
     device_token = '413b8b08a146ef0a5332b78c2f408442872d6ff4920d65a039c749b1acd5a8a3'
 
 
+    user = User.find(3)
+    oev = OnlineEvent.find(36)
 
-    APNS.send_notification(device_token, :alert => 'Ai fost invitata la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => 1, :type => 0} )
+    message = user.lastName + ' ' + user.firstName + ' te-a invitat la ' + oev.title
+
+    APNS.send_notification(device_token, :alert => message, :badge => 1, :sound => 'default',:other => {:eventId => 1, :type => 0} )
 
 
     render json:{status: :ok}

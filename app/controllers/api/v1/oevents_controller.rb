@@ -39,9 +39,13 @@ class  Api::V1::OeventsController < ApplicationController
               devices.to_a
             end
 
+            user = User.find(owner.id)
+
             devices.each do |device|
 
-              APNS.send_notification(device.pushtoken, :alert => 'Ai fost invitat la un eveniment!', :badge => 1, :sound => 'default',:other => {:eventId => onlineEvent.id , :type => 0} )
+              message = user.lastName + ' ' + user.firstName + ' te-a invitat la ' + onlineEvent.title
+
+              APNS.send_notification(device.pushtoken, :alert => message, :badge => 1, :sound => 'default',:other => {:eventId => onlineEvent.id , :type => 0} )
             end
           end
           results.push({:user => friend})
